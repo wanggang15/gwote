@@ -1,0 +1,22 @@
+# 端口号
+server:
+  port: 8808
+
+# 数据源
+spring:
+  datasource:
+    work:
+      url: jdbc:mysql://172.21.205.32:3306/auth_center?useUnicode=true&amp=utf-8&amp=convertToNull&amp=true
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+    localhost:
+      url: jdbc:mysql://172.21.48.31:3306/hr?serverTimezone=GMT&useSSL=false
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

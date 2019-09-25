@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jtljia.gwote.dao.work.WorkDao">
+
+    <!--获取平台所有员工信息-->
+    <select id="selectAllEmployee" parameterType="string" resultType="map">
+        select her.id,her.re_name,her.re_sex,her.re_birthday,her.re_age,hero.job_number, her.re_mobile,her.re_card_number,
+               hero.ro_position_name,her.re_available_to_date,her.re_hope_salarym,her.re_height,her.re_edu,her.re_edu_school,
+               her.re_edu_major,her.re_card_address,her.re_polity,her.re_marital
+        from hr_emp_resume her
+          left join auth_account aa on aa.phone = her.re_mobile
+          left join hr_emp_roster hero on hero.job_number = aa.job_number
+          left join auth_department ad on hero.ro_dept_id = ad.id
+        where ad.id = #{id};
+    </select>
+
+    <!--查询平台一级部门-->
+    <select id="selectTopDepartments" parameterType="String" resultType="map">
+        select *
+        from auth_department where code like concat(#{code},'%');
+    </select>
+
+</mapper>

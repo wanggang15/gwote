@@ -133,6 +133,7 @@ public class LogService {
             }else {
                 item.put("prop",new String[0]);
             }
+
         });
     }
 }

@@ -1,6 +1,6 @@
 # 端口号
 server:
-  port: 8808
+  port: 8809
 
 # 数据源
 spring:

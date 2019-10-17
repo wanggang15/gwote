@@ -2,8 +2,17 @@ package com.jtljia.gwote.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jtljia.gwote.service.LogService;
+import com.jtljia.gwote.util.ExcelUtil;
+import com.jtljia.gwote.util.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 @RestController
 @RequestMapping("/workflow")
@@ -53,4 +62,20 @@ public class LogController {
         return logService.getWorkFlow(json);
     }
 
+    /**
+     * Excel方式导入
+     * @param files
+     * @return
+     */
+    @PostMapping("/importWorkFlow")
+    public JSONObject importWorkFlow(@RequestParam("input-b1") MultipartFile[] files, HttpServletResponse response){
+        return ServiceUtil.execute("importWorkFlowRequest","", resultJSON -> {
+            ServletOutputStream outputStream = response.getOutputStream();
+            System.out.println(files.length);
+            for (MultipartFile file : files){
+                ArrayList<ArrayList<String>> workflows = ExcelUtil.readExcel2(file.getInputStream(), 0, 1, 5);
+                resultJSON.put("workflows",workflows);
+            }
+        });
+    }
 }
